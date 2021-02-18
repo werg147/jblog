@@ -3,5 +3,29 @@
 
 <mapper namespace="user">
 	
+	<!-- 회원가입 -->
+	<insert id="insert" parameterType="UserVo">
+		<![CDATA[
+			insert into users
+            values(seq_users_no.nextval, 
+                   #{id}, 
+                   #{userName}, 
+                   #{password}, 
+                   sysdate
+            )
+		]]>
+	</insert>
+	
+	<!-- 로그인 -->
+	<select id="selectUser" parameterType="UserVo" resultType="UserVo">
+		<![CDATA[
+			select userNo,
+                   userName
+            from users
+            where id = #{id}
+            and password = #{password}
+		]]>
+	</select>
+	
 
 </mapper>
