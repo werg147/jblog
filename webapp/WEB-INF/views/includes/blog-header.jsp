@@ -9,15 +9,18 @@
 				<h1><a href="${pageContext.request.contextPath}/${blogVo.id}">${blogVo.blogTitle}</a></h1>
 			
 			<ul class="clearfix">
-				<!-- 로그인 전 메뉴 -->
-				<li><a class="btn_s" href="">로그인</a></li>
+			
+				<!-- 로그인 전, 후 -->
+				<c:if test="${empty authUser.id}">
+					<li><a class="btn_s" href="${pageContext.request.contextPath}/user/loginForm">로그인</a></li>
+				</c:if>
 				
-				<!-- 로그인 후 메뉴 -->
 				<!-- 자신의 블로그일때만 관리 메뉴가 보인다. -->
-				<!-- 
-				<li><a class="btn_s" href="">내블로그 관리</a></li>
-				<li><a class="btn_s" href="">로그아웃</a></li>
-		 		-->
+				<c:if test="${authUser.id == blogVo.id}">
+					<li><a class="btn_s" href="${pageContext.request.contextPath}/${blogVo.id}/admin/basic">내블로그 관리</a></li>
+					<li><a class="btn_s" href="${pageContext.request.contextPath}/user/logout">로그아웃</a></li>
+				</c:if>
+				
 			</ul>
 		</div>
 		<!-- //header -->
