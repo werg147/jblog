@@ -19,7 +19,8 @@
 	<!-- 로그인 -->
 	<select id="selectUser" parameterType="UserVo" resultType="UserVo">
 		<![CDATA[
-			select userNo,
+			select id,
+			       userNo,
                    userName
             from users
             where id = #{id}

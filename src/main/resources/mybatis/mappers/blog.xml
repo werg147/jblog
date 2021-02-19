@@ -4,11 +4,19 @@
 <mapper namespace="blog">
 	
 	<!-- 블로그 메인 정보 가져오기(1명) -->
-	<select id="selectOne" parameterType="string">
+	<select id="selectOne" parameterType="string" resultType="com.javaex.vo.BlogVo">
 		<![CDATA[
-			
+			select us.id,
+			       us.userName,
+                   bl.blogtitle,
+                   bl.logofile
+            from users us, blog bl
+            where us.id = bl.id
+            and us.id = #{id}
 		]]>
 	</select>
+	
+	<!-- 기본 블로그타이틀 저장 (ㅇㅇㅇ님 블로그입니다.)-->
 	
 	
 

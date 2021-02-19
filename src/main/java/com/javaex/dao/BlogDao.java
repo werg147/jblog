@@ -4,6 +4,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.javaex.vo.BlogVo;
+
 @Repository
 public class BlogDao {
 	
@@ -11,10 +13,18 @@ public class BlogDao {
 	private SqlSession sqlSession;
 
 	//블로그 메인
-	public void selectOne(String id) {
+	public BlogVo selectOne(String id) {
 		System.out.println("[BlogDao] selectOne()");
 		
-		sqlSession.selectOne("blog.selectOne", id);
+		return sqlSession.selectOne("blog.selectOne", id);
+	}
+	
+	//기본 blogTitle저장
+	public void insertTitle(BlogVo blogVo) {
+		System.out.println("[BlogDao] insertTitle()");
+		System.out.println(blogVo);
+		
+		sqlSession.insert("blog.insertTitle", blogVo);
 	}
 	
 	

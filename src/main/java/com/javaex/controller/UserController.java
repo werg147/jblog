@@ -53,9 +53,6 @@ public class UserController {
 	public String login(@ModelAttribute UserVo userVo, HttpSession session) {
 		System.out.println("[UserController] login()");
 		
-		//아이디 비밀번호가 맞으면 로그인 -> (세션에 이름이나 아이디 담기?)
-		//아이디 비밀번호가 틀리면 로그인 실패 -> 다시 입력해주세요. result=fail
-		
 		UserVo authUser = userService.login(userVo);
 		
 		if(authUser == null) {
@@ -66,6 +63,20 @@ public class UserController {
 		}
 		
 	}
+	
+	//로그아웃
+	@RequestMapping(value="/logout", method= {RequestMethod.GET, RequestMethod.POST})
+	public String logout(HttpSession session) {
+		System.out.println("[UserController] logout");
+		
+		session.removeAttribute("authUser");
+		session.invalidate();
+
+		return "redirect:/";
+	}
+	
+	
+	
 	
 	
 }
