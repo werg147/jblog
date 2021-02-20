@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 
 <!DOCTYPE html>
@@ -15,12 +16,15 @@
 	<div id="wrap">
 		
 		<!-- 개인블로그 해더 -->
+		<c:import url="/WEB-INF/views/includes/blog-header.jsp"></c:import>
 
 
 		<div id="content">
 			<ul id="admin-menu" class="clearfix">
-				<li class="tabbtn selected"><a href="">기본설정</a></li>
-				<li class="tabbtn"><a href="">카테고리</a></li>
+			    <!-- 요청된 리소스 [/jblog//admin/basic]은(는) 가용하지 않습니다. -->
+			    <!-- 관리 페이지마다 기본으로 id값을 받아와야하는 번거로움? -> 로그인유저만 볼 수 있는 페이지 -> 세션값으로 id받기 -->
+				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${authUser.id}/admin/basic">기본설정</a></li>
+				<li class="tabbtn selected"><a href="${pageContext.request.contextPath}/${authUser.id}/admin/cate">카테고리</a></li>
 				<li class="tabbtn"><a href="">글작성</a></li>
 			</ul>
 			<!-- //admin-menu -->
@@ -94,7 +98,7 @@
 		
 		
 		<!-- 개인블로그 푸터 -->
-		
+		<c:import url="/WEB-INF/views/includes/blog-footer.jsp"></c:import>
 	
 	
 	</div>

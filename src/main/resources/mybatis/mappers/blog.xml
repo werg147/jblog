@@ -4,7 +4,7 @@
 <mapper namespace="blog">
 	
 	<!-- 블로그 메인 정보 가져오기(1명) -->
-	<select id="selectOne" parameterType="string" resultType="com.javaex.vo.BlogVo">
+	<select id="selectOne" parameterType="string" resultType="BlogVo">
 		<![CDATA[
 			select us.id,
 			       us.userName,
@@ -18,6 +18,15 @@
 	
 	<!-- 기본 블로그타이틀 저장 (ㅇㅇㅇ님 블로그입니다.)-->
 	
+	<!-- 블로그 관리 - 기본설정 (블로그제목, 로고파일 변경) -->
+	<update id="update" parameterType="BlogVo">
+		<![CDATA[
+			update blog
+            set blogtitle = #{blogTitle},
+                logofile = #{logoFile}
+            where id = #{id} 
+		]]>
+	</update>
 	
 
 </mapper>

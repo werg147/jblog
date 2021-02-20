@@ -45,22 +45,30 @@ public class BlogController {
 	}
 	
 	//블로그관리-기본설정-설정변경
-	@RequestMapping(value="/{id}/admin/basic/update", method= {RequestMethod.GET, RequestMethod.POST})
-	public String update(@PathVariable("id") String id, 
+	@RequestMapping(value="/{id}/admin/basic/modify", method= {RequestMethod.GET, RequestMethod.POST})
+	public String modify(@PathVariable("id") String id, 
 			             @RequestParam("blogTitle") String blogTitle, 
 			             @RequestParam(value="file", required=false) MultipartFile file ) {
 		
-		System.out.println("[BlogController] update()");
+		System.out.println("[BlogController] modify()");
 		
 		//System.out.println(blogTitle);
 		//System.out.println(file.getOriginalFilename());
 		
 		BlogVo blogVo = new BlogVo(id, blogTitle);
-		blogService.update(blogVo, file);
+		blogService.modify(blogVo, file);
 		
 		
 		//설정바꾼후 리다이렉트-기본설정
-		return "";
+		return "redirect:/" + id + "/admin/basic";
+	}
+	
+	//블로그관리-카테고리
+	@RequestMapping(value="/{id}/admin/cate", method= {RequestMethod.GET, RequestMethod.POST})
+	public String cate(@PathVariable("id") String id) {
+		System.out.println("[BlogController] cate()");
+		
+		return "blog/admin/blog-admin-cate";
 	}
 
 }

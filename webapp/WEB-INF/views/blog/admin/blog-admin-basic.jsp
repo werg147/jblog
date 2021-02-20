@@ -19,14 +19,14 @@
 
 		<div id="content">
 			<ul id="admin-menu" class="clearfix">
-				<li class="tabbtn selected"><a href="${pageContext.request.contextPath}/${blogVo.id}/admin/basic">기본설정</a></li>
-				<li class="tabbtn"><a href="">카테고리</a></li>
+				<li class="tabbtn selected"><a href="${pageContext.request.contextPath}/${authUser.id}/admin/basic">기본설정</a></li>
+				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${authUser.id}/admin/cate">카테고리</a></li>
 				<li class="tabbtn"><a href="">글작성</a></li>
 			</ul>
 			<!-- //admin-menu -->
 			
 			<div id="admin-content">
-				<form method="post" action="${pageContext.request.contextPath}/${blogVo.id}/admin/basic/update" enctype="multipart/form-data">
+				<form method="post" action="${pageContext.request.contextPath}/${blogVo.id}/admin/basic/modify" enctype="multipart/form-data">
 	 		      	<table id="admin-basic">
 	 		      		<colgroup>
 							<col style="width: 100px;">
@@ -43,7 +43,7 @@
 			      					<td class="text-left"><img src="${pageContext.request.contextPath}/assets/images/spring-logo.jpg"></td>
 			      				</c:when>
 			      				<c:otherwise>
-			      					<td class="text-left"><img src="${pageContext.request.contextPath}/${blogVo.id}/admin/basic/update/${blogVo.logoFile}"></td>
+			      					<td class="text-left"><img src="${pageContext.request.contextPath}/upload/${blogVo.logoFile}"></td>
 			      				</c:otherwise>
 			      			</c:choose>
 			      			   

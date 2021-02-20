@@ -28,4 +28,12 @@ public class BlogDao {
 	}
 	
 	
+	//블로그관리 - 기본설정 - 블로그제목, 로고파일 변경
+	public void update(BlogVo blogVo) {
+		System.out.println("[BlogDao] update()");
+		
+		int count = sqlSession.update("blog.update", blogVo);
+		System.out.println("성공여부" + count);
+	}
+	
 }
