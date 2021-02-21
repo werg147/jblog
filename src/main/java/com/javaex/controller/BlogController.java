@@ -1,5 +1,7 @@
 package com.javaex.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,10 +9,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.javaex.service.BlogService;
 import com.javaex.vo.BlogVo;
+import com.javaex.vo.CategoryVo;
 
 @Controller
 public class BlogController {
@@ -63,12 +67,24 @@ public class BlogController {
 		return "redirect:/" + id + "/admin/basic";
 	}
 	
-	//블로그관리-카테고리
-	@RequestMapping(value="/{id}/admin/cate", method= {RequestMethod.GET, RequestMethod.POST})
+	//리스트 뿌리기 -> 카테고리 추가  (포스트 갯수? 포스트 갯수를 카운트?)
+	
+	//블로그관리-카테고리 화면
+	@RequestMapping(value="/{id}/admin/category", method= {RequestMethod.GET, RequestMethod.POST})
 	public String cate(@PathVariable("id") String id) {
 		System.out.println("[BlogController] cate()");
 		
 		return "blog/admin/blog-admin-cate";
 	}
+	
+	//블로그관리-카테고리 리스트
+	@ResponseBody
+	@RequestMapping(value="/{id}/admin/cateList", method= {RequestMethod.GET, RequestMethod.POST})
+	public List<CategoryVo> cateList(@PathVariable("id") String id) {
+		System.out.println("[BlogController] cateList()");
+		
+		return blogService.cateList(id);
+	}
+	
 
 }

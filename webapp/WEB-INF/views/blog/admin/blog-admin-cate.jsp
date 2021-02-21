@@ -8,6 +8,9 @@
 <meta charset="UTF-8">
 <title>JBlog</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.12.4.js"></script>
+
+
 
 
 </head>
@@ -24,7 +27,7 @@
 			    <!-- 요청된 리소스 [/jblog//admin/basic]은(는) 가용하지 않습니다. -->
 			    <!-- 관리 페이지마다 기본으로 id값을 받아와야하는 번거로움? -> 로그인유저만 볼 수 있는 페이지 -> 세션값으로 id받기 -->
 				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${authUser.id}/admin/basic">기본설정</a></li>
-				<li class="tabbtn selected"><a href="${pageContext.request.contextPath}/${authUser.id}/admin/cate">카테고리</a></li>
+				<li class="tabbtn selected"><a href="${pageContext.request.contextPath}/${authUser.id}/admin/category">카테고리</a></li>
 				<li class="tabbtn"><a href="">글작성</a></li>
 			</ul>
 			<!-- //admin-menu -->
@@ -48,29 +51,25 @@
 			      			<th>삭제</th>      			
 			      		</tr>
 		      		</thead>
+		      		
 		      		<tbody id="cateList">
-		      			<!-- 리스트 영역 -->
-		      			<tr>
-							<td>1</td>
-							<td>자바프로그래밍</td>
-							<td>7</td>
-							<td>자바기초와 객체지향</td>
+		      		<!-- 리스트 영역 ajax방식-->
+		      		<%--
+		      		 
+						<tr id="t-${cateVo.cateNo}">
+							<td>${cateVo.cateNo}</td>
+							<td>${cateVo.cateName}</td>
+							<td>0</td>
+							<td>${cateVo.description}</td>
 						    <td class='text-center'>
 						    	<img class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg">
 						    </td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>오라클</td>
-							<td>5</td>
-							<td>오라클 설치와 sql문</td>
-						    <td class='text-center'>
-						    	<img class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg">
-						    </td>
-						</tr>
-						<!-- 리스트 영역 -->
+						</tr>		
+					--%>
 					</tbody>
 				</table>
+				
+				<input type="hidden" id="id" name="id" value="${authUser.id}">
       	
 		      	<table id="admin-cate-add" >
 		      		<colgroup>
@@ -105,6 +104,78 @@
 	<!-- //wrap -->
 </body>
 
+<script type="text/javascript">
+
+
+	//javascript경로 잊지말고 써주기 -> Uncaught ReferenceError: $ is not defined 에러 이유 :  jQuery js가 로딩이 안됨
+	//DOM 생성되면
+	$("document").ready(function(){
+		console.log("ready");
+		
+		//리스트출력
+		fetchList();
+	});
+	
+	
+	//카테고리 리스트 출력
+	function fetchList(){
+		
+		//id 데이터
+		var id = "${authUser.id}";
+	    console.log(id);
+	
+		$.ajax({
+
+			url : "${pageContext.request.contextPath}/" + id + "/admin/cateList",
+			type : "post",
+			//contentType : "application/json",
+			data : {id: id},
+
+			dataType : "json",
+			success : function(cateList) {
+				/* 성공했을때 */
+				console.log(cateList);
+				
+				for(var i=0; i<cateList.length; i++){
+					render(cateList[i], "down");
+				}
+				
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+	}
+		
+	//tobody영역에 id값 넣어서 뿌리면 출력안됨
+	//카테고리 리스트 정보 + html조합
+	function render(cateVo, updown){
+	
+		var str = "";
+		
+		str += '	<tr id="t-' + cateVo.cateNo + '">';
+		str += '		<td>' + cateVo.cateNo + '</td>';
+		str += '		<td>' + cateVo.cateName + '</td>';
+		str += '		<td>' + 0 + '</td>';
+		str += '		<td>'+ cateVo.description + '</td>';
+		str += '	    <td class="text-center">';
+		str += '	    	<img class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg">';
+		str += '	    </td>';
+		str += '	</tr>';
+
+
+		if(updown == "down"){
+			$("#cateList").append(str);
+		} else if(updown == "up") {
+			$("#cateList").prepend(str);
+		} else {
+			console.log("방향 미지정");
+		}
+		
+	} 
+
+
+</script>
 
 
 
