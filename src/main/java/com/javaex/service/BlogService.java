@@ -94,5 +94,18 @@ public class BlogService {
 		return blogDao.selectList(id);
 	}
 	
+	//블로그 관리 - 카테고리 추가 등록하기
+	public CategoryVo catePlus(CategoryVo cateVo) {
+		System.out.println("[BlogService] catePlus");
+		
+		//등록
+		blogDao.cateInsert(cateVo);
+		int cateNo = cateVo.getCateNo();
+	
+		//글 1개 가져오기
+		return blogDao.selectOne(cateNo);
+		
+	}
+	
 
 }

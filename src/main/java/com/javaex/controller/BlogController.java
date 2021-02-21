@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -84,6 +85,19 @@ public class BlogController {
 		System.out.println("[BlogController] cateList()");
 		
 		return blogService.cateList(id);
+	}
+	
+	//블로그관리-카테고리 추가등록
+	@ResponseBody
+	@RequestMapping(value="/{id}/admin/catePlus", method= {RequestMethod.GET, RequestMethod.POST})
+	public CategoryVo catePlus(@ModelAttribute CategoryVo cateVo) {
+		System.out.println("[BlogController] catePlus()");
+		//System.out.println(cateVo.toString());
+		
+		blogService.catePlus(cateVo);
+		//System.out.println(count);
+		
+		return blogService.catePlus(cateVo);
 	}
 	
 

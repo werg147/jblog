@@ -13,11 +13,39 @@
                    regDate
             from category
             where id = #{id}
+            order by cateNo desc
 		]]>
 	</select>
 
+	<!-- 카테고리 추가 등록하기 -->
+	<insert id="cateInsert" parameterType="CategoryVo">
+		<selectKey keyProperty="cateNo" resultType="int" order="BEFORE">
+			select seq_category_no.nextval from dual
+		</selectKey>
+		<![CDATA[
+			insert into category
+            values(
+            	#{cateNo},
+                #{id},
+                #{cateName},
+                #{description},
+                sysdate
+            )
+		]]>
+	</insert>
 
-
+	<!-- 카테고리 추가등록 정보 1개 가져오기 -->
+	<select id="selectOne" parameterType="int" resultType="CategoryVo">
+		<![CDATA[
+			select cateNo,
+                   id,
+                   cateName,
+                   description,
+                   regDate
+            from category
+            where cateNo = #{cateNo}
+		]]>
+	</select>
 
 
 

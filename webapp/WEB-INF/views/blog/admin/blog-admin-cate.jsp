@@ -116,13 +116,12 @@
 		fetchList();
 	});
 	
+	//id 데이터
+	var id = "${authUser.id}";
+    console.log(id);
 	
 	//카테고리 리스트 출력
 	function fetchList(){
-		
-		//id 데이터
-		var id = "${authUser.id}";
-	    console.log(id);
 	
 		$.ajax({
 
@@ -146,35 +145,79 @@
 			}
 		});
 	}
+	
+	
+	//카테고리 추가버튼 클릭
+	$("#btnAddCate").on("click", function(){
+		console.log("추가버튼 클릭")
 		
+		//등록 데이터(카테고리명,설명)
+		var cateName = $("[name='name']").val();
+		var	description = $("[name='desc']").val();
+		console.log(cateName);
+		console.log(description);
+		
+
+	
+	//저장요청
+		$.ajax({
+
+			url : "${pageContext.request.contextPath }/" + id + "/admin/catePlus",
+			type : "post",
+			//contentType : "application/json",
+			data : {cateName: cateName, description: description},
+
+			dataType : "json",
+			success : function(cateVo) {
+				/*성공시 처리해야될 코드 작성*/
+				console.log(cateVo);
+				render(cateVo, "up");
+				
+				/* 입력폼 비우기 */
+				$("[name='cateName']").val("");
+				$("[name='description']").val("");
+				
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+	});
+	
+	
+	//카테고리 삭제
+	$(".btnCateDel").on("click", function(){
+		console.log("삭제버튼 클릭");
+		
+	});
+	
+	
+
 	//tobody영역에 id값 넣어서 뿌리면 출력안됨
 	//카테고리 리스트 정보 + html조합
-	function render(cateVo, updown){
-	
+	function render(cateVo, updown) {
+
 		var str = "";
-		
+
 		str += '	<tr id="t-' + cateVo.cateNo + '">';
 		str += '		<td>' + cateVo.cateNo + '</td>';
 		str += '		<td>' + cateVo.cateName + '</td>';
 		str += '		<td>' + 0 + '</td>';
-		str += '		<td>'+ cateVo.description + '</td>';
+		str += '		<td>' + cateVo.description + '</td>';
 		str += '	    <td class="text-center">';
 		str += '	    	<img class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg">';
 		str += '	    </td>';
 		str += '	</tr>';
 
-
-		if(updown == "down"){
+		if (updown == "down") {
 			$("#cateList").append(str);
-		} else if(updown == "up") {
+		} else if (updown == "up") {
 			$("#cateList").prepend(str);
 		} else {
 			console.log("방향 미지정");
 		}
-		
-	} 
 
-
+	}
 </script>
 
 
