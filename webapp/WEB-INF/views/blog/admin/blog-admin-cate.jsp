@@ -28,7 +28,7 @@
 			    <!-- 관리 페이지마다 기본으로 id값을 받아와야하는 번거로움? -> 로그인유저만 볼 수 있는 페이지 -> 세션값으로 id받기 -->
 				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${authUser.id}/admin/basic">기본설정</a></li>
 				<li class="tabbtn selected"><a href="${pageContext.request.contextPath}/${authUser.id}/admin/category">카테고리</a></li>
-				<li class="tabbtn"><a href="">글작성</a></li>
+				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${authUser.id}/admin/writeForm">글작성</a></li>
 			</ul>
 			<!-- //admin-menu -->
 			
@@ -186,8 +186,34 @@
 	
 	
 	//카테고리 삭제
-	$(".btnCateDel").on("click", function(){
+	$("#cateList").on("click", "img", function(){
 		console.log("삭제버튼 클릭");
+		
+		//cateNo수집
+		var cateNo = $(this).data("cateno"); //data-cateno 소문자만 인식
+		console.log(cateNo);
+		
+		$.ajax({
+
+			url : "${pageContext.request.contextPath }/" + id + "/admin/remove",
+			type : "post",
+			//contentType : "application/json",
+			data : {cateNo: cateNo},
+
+			dataType : "json",
+			success : function(count) {
+				/*성공시 처리해야될 코드 작성*/
+				console.log(count);
+				
+				//삭제항목 화면에서 안보이게 처리
+				$("#t-" + cateNo).remove();
+	
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+		
 		
 	});
 	
@@ -205,7 +231,7 @@
 		str += '		<td>' + 0 + '</td>';
 		str += '		<td>' + cateVo.description + '</td>';
 		str += '	    <td class="text-center">';
-		str += '	    	<img class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg">';
+		str += '	    	<img data-cateno="' + cateVo.cateNo + '" class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg">';
 		str += '	    </td>';
 		str += '	</tr>';
 

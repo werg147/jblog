@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.javaex.dao.BlogDao;
 import com.javaex.vo.BlogVo;
 import com.javaex.vo.CategoryVo;
+import com.javaex.vo.PostVo;
 
 @Service
 public class BlogService {
@@ -106,6 +107,28 @@ public class BlogService {
 		return blogDao.selectOne(cateNo);
 		
 	}
+	
+	//카테고리 삭제
+	public int remove(int cateNo) {
+		System.out.println("[BlogService] remove()");
+		
+		return blogDao.delete(cateNo);
+	}
+	
+	//블로그 관리 - 글작성 폼
+	public List<CategoryVo> writeForm(String id) {
+		System.out.println("[BlogService] writeForm()");
+		
+		return blogDao.selectForm(id);
+	}
+	
+	//글 작성
+	public void write(PostVo postVo) {
+		System.out.println("[BlogService] write()");
+		
+		blogDao.insert(postVo);
+	}
+	
 	
 
 }

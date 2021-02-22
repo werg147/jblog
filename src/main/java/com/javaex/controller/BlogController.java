@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.javaex.service.BlogService;
 import com.javaex.vo.BlogVo;
 import com.javaex.vo.CategoryVo;
+import com.javaex.vo.PostVo;
 
 @Controller
 public class BlogController {
@@ -99,6 +100,45 @@ public class BlogController {
 		
 		return blogService.catePlus(cateVo);
 	}
+	
+	//블로그관리- 카테고리 삭제
+	@ResponseBody
+	@RequestMapping(value="/{id}/admin/remove", method= {RequestMethod.GET, RequestMethod.POST})
+	public int remove(@ModelAttribute CategoryVo cateVo) {
+		System.out.println("[BlogController] remove()");
+		//System.out.println(cateVo);
+		int cateNo = cateVo.getCateNo();
+		System.out.println(cateNo);
+		
+		int count = blogService.remove(cateNo);
+		System.out.println(count);
+		
+		return count;
+	}
+	
+	//블로그관리- 글작성 폼
+	@RequestMapping(value="/{id}/admin/writeForm", method= {RequestMethod.GET, RequestMethod.POST})
+	public String writeForm(@PathVariable String id, Model model) {
+		System.out.println("[BlogController] writeForm()");
+		//카테고리명 가져와서 담아서 포워드
+		List<CategoryVo> cateList = blogService.writeForm(id);
+		
+		model.addAttribute("cateList", cateList);
+		
+		return "blog/admin/blog-admin-write";
+	}
+	
+	//글 작성
+	@RequestMapping(value="/{id}/admin/write", method= {RequestMethod.GET, RequestMethod.POST})
+	public String write(@PathVariable String id, @ModelAttribute PostVo postVo) {
+		System.out.println("[BlogController] write()");
+		//System.out.println(postVo);
+		
+		blogService.write(postVo);
+		
+		return "redirect:/" + id + "/admin/writeForm";
+	}
+	
 	
 
 }

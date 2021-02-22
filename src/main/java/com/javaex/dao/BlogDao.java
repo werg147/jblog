@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.javaex.vo.BlogVo;
 import com.javaex.vo.CategoryVo;
+import com.javaex.vo.PostVo;
 
 @Repository
 public class BlogDao {
@@ -49,11 +50,9 @@ public class BlogDao {
 	//블로그 관리 - 카테고리 추가등록
 	public int cateInsert(CategoryVo cateVo) {
 		System.out.println("[blogDao] cateInsert()");
-		
-		System.out.println("실행전(no값비교):" + cateVo);
+
 		sqlSession.insert("category.cateInsert", cateVo);
-		System.out.println("실행후(no값비교):" + cateVo);
-		
+
 		return cateVo.getCateNo();
 	}
 	
@@ -62,6 +61,30 @@ public class BlogDao {
 		System.out.println("[blogDao] selectOne()");
 		
 		return sqlSession.selectOne("category.selectOne", cateNo);
+	}
+	
+	//카테고리 삭제
+	public int delete(int cateNo) {
+		System.out.println("[BlogDao] delete()");
+		
+		//int count = sqlSession.delete("category.delete", cateNo);
+		//System.out.println(count);
+		
+		return sqlSession.delete("category.delete", cateNo);
+	}
+	
+	//블로그 관리 - 글작성 폼
+	public List<CategoryVo> selectForm(String id) {
+		System.out.println("[blogDao] selectForm()");
+		
+		return sqlSession.selectList("category.selectForm", id);
+	}
+	
+	//글 작성
+	public void insert(PostVo postVo) {
+		System.out.println("[BlogDao] insert()");
+		
+		sqlSession.insert("post.insert", postVo);
 	}
 	
 	

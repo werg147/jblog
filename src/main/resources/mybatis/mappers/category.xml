@@ -19,12 +19,10 @@
 
 	<!-- 카테고리 추가 등록하기 -->
 	<insert id="cateInsert" parameterType="CategoryVo">
-		<selectKey keyProperty="cateNo" resultType="int" order="BEFORE">
-			select seq_category_no.nextval from dual
-		</selectKey>
 		<![CDATA[
 			insert into category
             values(
+                seq_category_no.nextval,
             	#{cateNo},
                 #{id},
                 #{cateName},
@@ -44,6 +42,24 @@
                    regDate
             from category
             where cateNo = #{cateNo}
+		]]>
+	</select>
+	
+	<!-- 카테고리 삭제하기 -->
+	<delete id="delete" parameterType="int">
+		<![CDATA[
+			delete from category
+            where cateNo = #{cateNo}
+		]]>
+	</delete>
+	
+	<!-- 등록폼 cateName 가져오기 -->
+	<select id="selectForm" parameterType="string" resultType="CategoryVo">
+		<![CDATA[
+			select cateNo,
+			       cateName
+            from category
+            where id = #{id}
 		]]>
 	</select>
 
