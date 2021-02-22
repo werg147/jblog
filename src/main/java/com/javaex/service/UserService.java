@@ -25,10 +25,11 @@ public class UserService {
 		
 		//2.블로그 기본제목 등록(ㅇㅇㅇ의 블로그입니다)
 		String id = userVo.getId();
-		String blogTitle = userVo.getUserName();
+		String blogTitle = userVo.getUserName() + "의 블로그 입니다.";
+		System.out.println(blogTitle);
 		BlogVo blogVo = new BlogVo(id, blogTitle);
 		
-		blogDao.insertTitle(blogVo);
+		blogDao.insertOne(blogVo);
 		
 		return count;
 	}

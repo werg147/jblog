@@ -23,12 +23,12 @@ public class BlogDao {
 		return sqlSession.selectOne("blog.selectOne", id);
 	}
 	
-	//기본 blogTitle저장
-	public void insertTitle(BlogVo blogVo) {
-		System.out.println("[BlogDao] insertTitle()");
+	//기본 blog정보 저장
+	public void insertOne(BlogVo blogVo) {
+		System.out.println("[BlogDao] insertOne()");
 		System.out.println(blogVo);
 		
-		sqlSession.insert("blog.insertTitle", blogVo);
+		sqlSession.insert("blog.insertOne", blogVo);
 	}
 	
 	
@@ -46,6 +46,7 @@ public class BlogDao {
 
 		return sqlSession.selectList("category.selectList", id);
 	}
+	
 	
 	//블로그 관리 - 카테고리 추가등록
 	public int cateInsert(CategoryVo cateVo) {

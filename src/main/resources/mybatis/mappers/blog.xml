@@ -17,6 +17,14 @@
 	</select>
 	
 	<!-- 기본 블로그타이틀 저장 (ㅇㅇㅇ님 블로그입니다.)-->
+	<insert id="insertOne" parameterType="BlogVo">
+		<![CDATA[
+			insert into blog
+            values(#{id},
+                   #{blogTitle}, 
+                    null)
+		]]>
+	</insert>
 	
 	<!-- 블로그 관리 - 기본설정 (블로그제목, 로고파일 변경) -->
 	<update id="update" parameterType="BlogVo">

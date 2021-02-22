@@ -24,8 +24,8 @@ public class BlogController {
 	@Autowired
 	private BlogService blogService;
 	
-	//블로그 메인  -> 관리페이지 작업 후 업데이트
-	@RequestMapping(value="/{id}")  //없는 아이디 조회시 에러창띄우기 ->나중에
+	//블로그 메인  
+	@RequestMapping(value="/{id}")
 	public String blogMain(@PathVariable("id") String id, Model model) {
 		System.out.println("[BlogController] blogMain()");
 		//System.out.println(id);
@@ -73,8 +73,12 @@ public class BlogController {
 	
 	//블로그관리-카테고리 화면
 	@RequestMapping(value="/{id}/admin/category", method= {RequestMethod.GET, RequestMethod.POST})
-	public String cate(@PathVariable("id") String id) {
+	public String cate(@PathVariable("id") String id, Model model) {
 		System.out.println("[BlogController] cate()");
+		
+		//블로그헤더-블로그타이틀 출력 정보 보내기
+        BlogVo blogVo = blogService.blogMain(id);
+        model.addAttribute("blogVo", blogVo);
 		
 		return "blog/admin/blog-admin-cate";
 	}
@@ -91,14 +95,14 @@ public class BlogController {
 	//블로그관리-카테고리 추가등록
 	@ResponseBody
 	@RequestMapping(value="/{id}/admin/catePlus", method= {RequestMethod.GET, RequestMethod.POST})
-	public CategoryVo catePlus(@ModelAttribute CategoryVo cateVo) {
+	public CategoryVo catePlus(@ModelAttribute CategoryVo categoryVo) {
 		System.out.println("[BlogController] catePlus()");
 		//System.out.println(cateVo.toString());
 		
-		blogService.catePlus(cateVo);
+		CategoryVo cateVo = blogService.catePlus(categoryVo);
 		//System.out.println(count);
 		
-		return blogService.catePlus(cateVo);
+		return cateVo;
 	}
 	
 	//블로그관리- 카테고리 삭제
@@ -124,6 +128,10 @@ public class BlogController {
 		List<CategoryVo> cateList = blogService.writeForm(id);
 		
 		model.addAttribute("cateList", cateList);
+		
+		//블로그헤더-블로그타이틀 출력 정보 보내기
+        BlogVo blogVo = blogService.blogMain(id);
+        model.addAttribute("blogVo", blogVo);
 		
 		return "blog/admin/blog-admin-write";
 	}

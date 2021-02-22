@@ -23,7 +23,6 @@
 			insert into category
             values(
                 seq_category_no.nextval,
-            	#{cateNo},
                 #{id},
                 #{cateName},
                 #{description},
@@ -44,6 +43,8 @@
             where cateNo = #{cateNo}
 		]]>
 	</select>
+	
+
 	
 	<!-- 카테고리 삭제하기 -->
 	<delete id="delete" parameterType="int">
